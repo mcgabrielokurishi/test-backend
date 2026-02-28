@@ -1,0 +1,33 @@
+import {
+  Controller,
+  Get,
+  Query,
+  Param,
+  UseGuards,
+} from "@nestjs/common";
+import { TransactionsService } from "./transactions.service";
+import { JwtAuthGuard } from "../common/guards/jwt.guard";
+import { CurrentUser } from "../common/decorators/user.decorator";
+import { QueryTransactionsDto } from "./dto/query-transactions.dto";
+
+@Controller("transactions")
+@UseGuards(JwtAuthGuard)
+export class TransactionsController {
+  constructor(private readonly transactionsService: TransactionsService) {}
+
+  @Get()
+  getMyTransactions(
+    @CurrentUser() user,
+    @Query() query: QueryTransactionsDto
+  ) {
+    return this.transactionsService.getUserTransactions(user.userId, query);
+  }
+
+  @Get(":id")
+  getSingleTransaction(
+    @CurrentUser() user,
+    @Param("id") id: string
+  ) {
+    return this.transactionsService.getSingleTransaction(user.userId, id);
+  }
+}
