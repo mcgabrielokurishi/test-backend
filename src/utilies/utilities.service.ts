@@ -2,9 +2,9 @@ import { Injectable, BadRequestException } from "@nestjs/common";
 import { PrismaService } from "database/prisma.service";
 import { WalletService } from "../wallet/wallet.service";
 import { MockElectricityProvider } from "./providers/mock-electricity.provider";
-import { Decimal } from "@prisma/client/runtime/library";
+import { Decimal } from "decimal.js";
 import { randomUUID } from "crypto";
-import { Prisma, TransactionType } from "@prisma/client";
+import { TransactionType } from "@prisma/client";
 
 @Injectable()
 export class UtilitiesService {
@@ -40,7 +40,7 @@ export class UtilitiesService {
         data: { balance: { decrement: amount } },
       });
 
-      const decimalAmount= new Prisma.Decimal(amount);
+      const decimalAmount= new Decimal(amount);
       
       const transaction = await tx.transaction.create({
         data: {

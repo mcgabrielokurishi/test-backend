@@ -8,7 +8,7 @@ import {
 } from "@nestjs/common";
 import { WalletService } from "./wallet.service";
 import { JwtAuthGuard } from "../auth/jwt-auth.guard";
-import { Prisma } from "@prisma/client";
+import { Decimal } from "decimal.js";
 
 @Controller("wallet")
 @UseGuards(JwtAuthGuard)
@@ -29,7 +29,7 @@ export class WalletController {
   ) {
     return this.walletService.credit(
       req.user.userId,
-      new Prisma.Decimal(amount)
+      new Decimal(amount)
     );
   }
 
@@ -41,7 +41,7 @@ export class WalletController {
   ) {
     return this.walletService.debit(
       req.user.userId,
-      new Prisma.Decimal(amount)
+      new Decimal(amount)
     );
   }
 }

@@ -2,7 +2,7 @@ import { Injectable, BadRequestException } from "@nestjs/common";
 import { PrismaService } from "database/prisma.service";
 import { WalletService } from "../wallet/wallet.service";
 import { VendElectricityDto } from "./dto/vend-electricity.dto";
-import { Prisma } from "@prisma/client";
+import { Decimal } from "decimal.js";
 import axios from "axios";
 import { randomUUID } from "crypto";
 
@@ -15,7 +15,7 @@ export class VendorService {
 
   async vendElectricity(userId: string, dto: VendElectricityDto) {
     const reference = randomUUID();
-    const amount = new Prisma.Decimal(dto.amount);
+    const amount = new Decimal(dto.amount);
 
     //  Create pending vendor transaction
      const vendorTx = await this.prisma.vendorTransaction.create({

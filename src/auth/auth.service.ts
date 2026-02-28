@@ -14,9 +14,9 @@ import { RegisterDto } from "./dto/register.dto";
 @Injectable()
 export class AuthService {
   private MAX_FAILED_ATTEMPTS = 5;
-  private LOCK_TIME_MINUTES = 15;
+  private LOCK_TIME_MINUTES = 15; 
 
-  constructor(
+  constructor( 
     private prisma: PrismaService,
     private jwtService: JwtService
   ) {}

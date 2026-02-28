@@ -4,7 +4,8 @@ import {
   ForbiddenException,
 } from "@nestjs/common";
 import { PrismaService } from "database/prisma.service";
-import { Prisma, TransactionType } from "@prisma/client";
+import { Decimal } from "decimal.js";
+import { TransactionType } from "@prisma/client";
 import { randomUUID } from "crypto";
 
 @Injectable()
@@ -35,7 +36,7 @@ export class WalletService {
   // CREDIT WALLET (Atomic Increment)
   async credit(
     userId: string,
-    amount: Prisma.Decimal,
+    amount: Decimal,
     description = "Wallet credit"
   ) {
     if (amount.lte(0)) {
@@ -78,7 +79,7 @@ export class WalletService {
   // DEBIT WALLET (Atomic + Safe)
   async debit(
     userId: string,
-    amount: Prisma.Decimal,
+    amount: Decimal,
     description = "Wallet debit"
   ) {
     if (amount.lte(0)) {
@@ -125,7 +126,7 @@ export class WalletService {
   // DEBIT WITH IDEMPOTENCY (Production Safe)
   async debitWithIdempotency(
     userId: string,
-    amount: Prisma.Decimal,
+    amount: Decimal,
     reference: string,
     description = "Wallet debit"
   ) {

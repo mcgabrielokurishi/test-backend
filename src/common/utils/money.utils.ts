@@ -1,7 +1,7 @@
-import { Prisma } from "@prisma/client";
+import { Decimal } from "decimal.js";
 
 export const toDecimal = (amount: number | string) =>
-  new Prisma.Decimal(amount);
+  new Decimal(amount);
 
-export const isPositive = (amount: Prisma.Decimal) =>
+export const isPositive = (amount: Decimal) =>
   amount.gt(0);
